@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">ForumAppProject</string>
+    <string name="add_topic">Add Topic</string>
 </resources>
