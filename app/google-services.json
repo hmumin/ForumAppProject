@@ -1,0 +1,42 @@
+{
+  "project_info": {
+    "project_number": "414796218180",
+    "firebase_url": "https://forumproject-8a136.firebaseio.com",
+    "project_id": "forumproject-8a136",
+    "storage_bucket": "forumproject-8a136.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:414796218180:android:c1be6d933c0df290",
+        "android_client_info": {
+          "package_name": "com.hassan.forumappproject"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "414796218180-jai4v5tr3n7alpme0n1rrgh99t3madh4.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDmuHXdgl1_M7FJ_MsQPDx2lSafpnOLKYI"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
