@@ -4,7 +4,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 
 
-//Testing Round two, trying to work Github
+//Testing Round two, trying to work Github, did it work
 public class MainActivity extends AppCompatActivity {
 
 
