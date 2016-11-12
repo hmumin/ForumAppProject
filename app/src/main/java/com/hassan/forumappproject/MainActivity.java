@@ -1,8 +1,10 @@
 package com.hassan.forumappproject;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
+import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -83,6 +85,33 @@ public class MainActivity extends AppCompatActivity {
         //method fetching questions from Firebase so listview can be populated with questions
         fetchQuestion();
 
+        //when listView clicked
+        questionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
+        {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long viewId)
+            {
+                //
+                TextView dateTextView = (TextView) view.findViewById(R.id.dateTV);
+                TextView questionTextView = (TextView) view.findViewById(R.id.questionTV);
+                TextView upvoteTextView = (TextView) view.findViewById(R.id.upvote_downvoteTV);
+
+                //get information from the listView components
+                String date = dateTextView.getText().toString();
+                String question = questionTextView.getText().toString();
+                String upvote = upvoteTextView.getText().toString();
+
+                //pass listView data to the View activity and launch it
+                Intent viewQuestion_Intent = new Intent(getApplicationContext(),
+                        ViewQuestionActivity.class);
+                viewQuestion_Intent.putExtra("Date", date);
+                viewQuestion_Intent.putExtra("Question", question);
+                viewQuestion_Intent.putExtra("Upvote", upvote);
+                //launch view question activity
+                startActivity(viewQuestion_Intent);
+
+            }
+        });
 
 
 

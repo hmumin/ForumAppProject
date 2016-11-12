@@ -4,4 +4,6 @@
     <string name="whats_on_your_mind">Type in whats on your mind below</string>
     <string name="add_to_forum">Add To Forum</string>
     <string name="empty_textView">No Quesitons</string>
+    <string name="upvote_button">Helpful</string>
+    <string name="answer_button">Answer Question</string>
 </resources>
