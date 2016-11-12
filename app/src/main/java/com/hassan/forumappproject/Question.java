@@ -8,10 +8,13 @@ public class Question {
 
     public String question;
     public String date;
+    public String answer;
     public int upvote;
     public int downVote;
 
     //empty contructor
+    public Question(){}
+
     public Question(String question, String date)
     {
         this.question = question;
@@ -26,6 +29,14 @@ public class Question {
 
     public void setQuestion(String question) {
         this.question = question;
+    }
+
+    public String getAnswer() {
+        return this.answer;
+    }
+
+    public void setAnswer(String answer) {
+        this.answer = answer;
     }
 
     public String getDate() {
@@ -44,11 +55,5 @@ public class Question {
         this.upvote = upvote;
     }
 
-    public int getDownVote() {
-        return downVote;
-    }
 
-    public void setDownVote(int downVote) {
-        this.downVote = downVote;
-    }
 }
