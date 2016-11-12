@@ -11,6 +11,7 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.SimpleCursorAdapter;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -121,20 +122,28 @@ public class MainActivity extends AppCompatActivity {
     public void saveQuestion()
     {
 
-        //get question typed into editText and get date
-        questionAsked = questionEditText.getText().toString();
-        String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+        //get question typed into editText and get date if only user types something otherwise
+        if(questionEditText.getText().toString().isEmpty())
+        {
+            Toast.makeText(this,"Type a question", Toast.LENGTH_LONG).show();
+        }
+        else
+        {
+            questionAsked = questionEditText.getText().toString();
+            String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 
-        //question object to pass to firebase
-        Question quesionObj = new Question(questionAsked,date);
+            //question object to pass to firebase
+            Question quesionObj = new Question(questionAsked,date);
 
-        DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push();
-        //pass question object to firebase
-        newQuestion.setValue(quesionObj);
-        adapter.clear();
-        fetchQuestion();
+            DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push();
+            //pass question object to firebase
+            newQuestion.setValue(quesionObj);
+            adapter.clear();
+            fetchQuestion();
 
-        questionEditText.getText().clear();
+            questionEditText.getText().clear();
+        }
+
 
     }
 
