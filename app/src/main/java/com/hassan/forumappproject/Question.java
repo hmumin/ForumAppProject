@@ -1,5 +1,7 @@
 package com.hassan.forumappproject;
 
+import java.util.ArrayList;
+
 /**
  * Created by hmumin on 11/8/16.
  */
@@ -8,11 +10,11 @@ public class Question {
 
     public String question;
     public String date;
-    public String answer;
     public int upvote;
-    public int downVote;
+    public String answer;
+    public ArrayList<String> answerList = new ArrayList<>();
 
-    //empty contructor
+    //empty constructor
     public Question(){}
 
     public Question(String question, String date)
@@ -31,13 +33,6 @@ public class Question {
         this.question = question;
     }
 
-    public String getAnswer() {
-        return this.answer;
-    }
-
-    public void setAnswer(String answer) {
-        this.answer = answer;
-    }
 
     public String getDate() {
         return date;
@@ -56,4 +51,19 @@ public class Question {
     }
 
 
+
+    public ArrayList getAnswerList()
+    {
+        return this.answerList;
+    }
+
+
+    public void setAnswerList(ArrayList<String> answerList) {
+        this.answerList = answerList;
+    }
+
+    public void addAnswerTolist(String answer)
+    {
+        answerList.add(answer);
+    }
 }
