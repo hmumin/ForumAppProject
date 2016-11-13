@@ -3,6 +3,7 @@ package com.hassan.forumappproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -44,6 +45,9 @@ public class MainActivity extends AppCompatActivity {
     private static final String ALL_QUESTIONS_KEY = "All_questions";
     private DatabaseReference dbReference;
 
+
+    //Debug
+    public static final String TAG = "DEBUG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -102,7 +106,7 @@ public class MainActivity extends AppCompatActivity {
                 String question = questionTextView.getText().toString();
                 String upvote = upvoteTextView.getText().toString();
 
-                //pass listView data to the View activity and launch it
+                //pass listView data to the View question activity and launch it
                 Intent viewQuestion_Intent = new Intent(getApplicationContext(),
                         ViewQuestionActivity.class);
                 viewQuestion_Intent.putExtra("Date", date);
@@ -159,6 +163,7 @@ public class MainActivity extends AppCompatActivity {
                 ArrayList<Question> questions = new ArrayList<>();
                 for(DataSnapshot ds : dataSnapshot.getChildren())
                 {
+                    Log.d(TAG, "ds: " + ds);
                     Question question = ds.getValue(Question.class);
                     questions.add(question);
                 }
