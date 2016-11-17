@@ -8,10 +8,17 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
+import android.widget.EditText;
+
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 
 import org.w3c.dom.Text;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ViewQuestionActivity extends AppCompatActivity {
 
@@ -19,11 +26,19 @@ public class ViewQuestionActivity extends AppCompatActivity {
     public Button answerButton;
     public TextView questionTextView;
     public ListView answersListView;
+
+    public EditText answer_editText;
     String quesionAsked;
     String answerToQuestion;
+    String questionAnswered;
 
     //Store answers to question
     ArrayList<String> answerItems = new ArrayList<String>();
+
+    //TODo delete if does not work
+    //for FireBase
+    private static final String ALL_QUESTIONS_KEY = "All_questions";
+    private DatabaseReference dbReference;
 
 
     @Override
@@ -39,6 +54,10 @@ public class ViewQuestionActivity extends AppCompatActivity {
         questionTextView.setText(quesionAsked);
 
 
+        //Set up Firebase //TODO delete if does not work
+        FirebaseDatabase database = FirebaseDatabase.getInstance();
+        dbReference = database.getReference();
+
         //set up listview to show answers to question
         answersListView = (ListView) findViewById(R.id.answers_listView);
 
@@ -46,10 +65,10 @@ public class ViewQuestionActivity extends AppCompatActivity {
         ArrayAdapter<String> answerListAdapter =
                 new ArrayAdapter<String>(this, R.layout.question_items, R.id.answerTextView,answerItems);
 
-        //set adpter to list view
+        //set adapter to list view
         answersListView.setAdapter(answerListAdapter);
 
-        //fetch answer from firebase database and add them to listview
+        //TODO fetch answer from firebase database and add them to listview
 
         //get answer from answer activity
         Intent answerIntent = getIntent();
@@ -70,11 +89,14 @@ public class ViewQuestionActivity extends AppCompatActivity {
                 Intent answer_question_intent = new Intent(getApplicationContext(),
                         AnswerQuestionActivity.class);
                 answer_question_intent.putExtra("Question", question);
+
                 //launch view question activity
                 startActivity(answer_question_intent);
 
             }
         });
+
+
 
     }
 }
