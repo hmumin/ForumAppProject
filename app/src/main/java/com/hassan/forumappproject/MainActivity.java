@@ -25,6 +25,7 @@ import com.google.firebase.database.ValueEventListener;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
 
 public class MainActivity extends AppCompatActivity {
@@ -35,6 +36,9 @@ public class MainActivity extends AppCompatActivity {
     public ListView questionsListView;
     public EditText questionEditText;
     public String questionAsked;
+
+    //TODo make a list for answers but do not display on this page, for only when clicked to AnswerQuestionActivity
+    public ListView answersInvisable;
 
     //Store questions
     ArrayList<Question> questionItems = new ArrayList<Question>();
@@ -96,15 +100,17 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId)
             {
-                //
+                //TODO add answerlist data so it gets passes too
                 TextView dateTextView = (TextView) view.findViewById(R.id.dateTV);
                 TextView questionTextView = (TextView) view.findViewById(R.id.questionTV);
                 TextView upvoteTextView = (TextView) view.findViewById(R.id.upvote_downvoteTV);
+                ListView answersInvisable = (ListView) view.findViewById(R.id.answers_listView); //TODO change if not working
 
                 //get information from the listView components
                 String date = dateTextView.getText().toString();
                 String question = questionTextView.getText().toString();
                 String upvote = upvoteTextView.getText().toString();
+                //ArrayList answers = answersInvisable.toString(); //TODO delete or work out.
 
                 //pass listView data to the View question activity and launch it
                 Intent viewQuestion_Intent = new Intent(getApplicationContext(),
@@ -112,6 +118,7 @@ public class MainActivity extends AppCompatActivity {
                 viewQuestion_Intent.putExtra("Date", date);
                 viewQuestion_Intent.putExtra("Question", question);
                 viewQuestion_Intent.putExtra("Upvote", upvote);
+                //viewQuestion_Intent.putExtra("answer", answersInvisable); //TODO delete or work out
                 //launch view question activity
                 startActivity(viewQuestion_Intent);
 
@@ -136,8 +143,13 @@ public class MainActivity extends AppCompatActivity {
             questionAsked = questionEditText.getText().toString();
             String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 
+            //TODO change "new ArrayList<Question>();" to an answers list. Just making sure we can save answers to the questions in theory
+            ArrayList answers =  new ArrayList<String>();
+            answers.add("Testing 123"); //TODO remove, just testing
+
             //question object to pass to firebase
-            Question quesionObj = new Question(questionAsked,date);
+            Question quesionObj = new Question(questionAsked,date, answers);
+    //Just making sure we can save answers to the questions in theory /\   //TODO delete note when solved, also add upvote
 
             DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push();
             //pass question object to firebase

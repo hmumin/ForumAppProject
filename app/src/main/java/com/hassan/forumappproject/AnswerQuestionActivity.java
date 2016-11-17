@@ -35,7 +35,6 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     public DatabaseReference dbReference;
 
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -100,8 +99,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             typedAnswerToQuestion = answerEditTextView.getText().toString();
 
 
-            //need to get the question and attach the answer to it
-            //then save it to firebase
+            //TODO need to get the question and attach the answer to it
+            //TODO then save it to firebase
 
 
             answerEditTextView.getText().clear();
