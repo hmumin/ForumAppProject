@@ -35,7 +35,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
     //Store answers to question
     ArrayList<String> answerItems = new ArrayList<String>();
 
-    //TODo delete if does not work
+    //TODo delete if does not work, either bring in from main activity or find list matched to question, if later use Firebase below
     //for FireBase
     private static final String ALL_QUESTIONS_KEY = "All_questions";
     private DatabaseReference dbReference;

@@ -44,6 +44,7 @@ public class QuestionsAdapter extends ArrayAdapter<Question> {
         //populate data into template view using data object
         dateTv.setText(question.getDate());
         questionTv.setText(question.getQuestion());
+        //TODO add upVote below without program crashing
         //upVoteTv.setText(question.getUpvote());
 
         //return completed view to screen
