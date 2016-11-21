@@ -9,7 +9,7 @@
         android:id="@+id/answerTextView"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="How many people live on Earth?"
+        android:text="Answer goes Here"
         android:padding="5dp"
         android:textStyle="bold"
         android:ellipsize="end"
