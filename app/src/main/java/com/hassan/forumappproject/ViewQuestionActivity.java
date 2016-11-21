@@ -87,8 +87,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
         Intent answerIntent = getIntent();
         answerToQuestion = answerIntent.getStringExtra("Answer");
 
-        //fetchQuestionAnswers();
-        Log.d(RTAG, "RESUME triggreed FETCH clear ");
+
 
         //this is a progress bar/spinning wheel delay dialog box.
         //when user types an answer and then clicks add answer we need to delay
@@ -99,7 +98,7 @@ public class ViewQuestionActivity extends AppCompatActivity {
         new Thread() {
             public void run() {
                 try {
-                    // sleep/delay for 4 seconds.
+                    // sleep/delay/buffer for 4 seconds.
                     sleep(4000);
                 } catch (Exception e) {
                 }
@@ -119,10 +118,10 @@ public class ViewQuestionActivity extends AppCompatActivity {
             @Override
             public void onClick(View v)
             {
-                //pass question to answer activity
+                //get the question and pass it to AnswerQuestionactivity
                 String question = questionTextView.getText().toString();
 
-                //pass Question data to the View activity and launch it
+                //pass Question data to the AnswerQuestionActivity and launch it
                 Intent answer_question_intent = new Intent(getApplicationContext(),
                         AnswerQuestionActivity.class);
                 answer_question_intent.putExtra("Question", question);
@@ -244,12 +243,12 @@ public class ViewQuestionActivity extends AppCompatActivity {
                     //upvote count
                     if(questions.get(i).getQuestion().equalsIgnoreCase(questionAsked))
                     {
-                        //add answer to the questions answer list
+                        //calculate upcote and set it to the question object
                         int upvoteCount = questions.get(i).getUpvote();
                         upvoteCount++;
                         questions.get(i).setUpvote(upvoteCount);
 
-                        //updating questions answer array to add the answer into it
+                        //replace question object in firebase wtht he updated version
                         mQuestionRef.child(questions.get(i).getKey()).setValue(questions.get(i));
 
                     }

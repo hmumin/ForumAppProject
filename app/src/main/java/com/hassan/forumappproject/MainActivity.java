@@ -48,7 +48,7 @@ public class MainActivity extends AppCompatActivity {
     private DatabaseReference dbReference;
 
 
-    //Debug
+    //Debug log tag
     public static final String TAG = "DEBUG";
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -112,7 +112,7 @@ public class MainActivity extends AppCompatActivity {
 
 
 
-        //when listView clicked
+        //when quesiton in the listview is clicked
         questionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
         {
             @Override
@@ -187,11 +187,13 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Log.d(TAG, "ds: " + ds);
                     Question question = ds.getValue(Question.class);
+                    //get the questions key from firebase and set it to the question object
                     question.setKey(ds.getKey());
                     Log.d(TAG, "question and key: " + question.getQuestion() + " " + question.getKey());
                     questions.add(question);
                 }
-                //iterate over questions objects in firebase and add them to listview
+                //iterate over questions objects in our arraylist that we received from firebase
+                // and add them to listview
                 for(int i = 0; i < questions.size(); i++)
                 {
                     adapter.add(questions.get(i));
