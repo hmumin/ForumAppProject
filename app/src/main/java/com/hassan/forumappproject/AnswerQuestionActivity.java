@@ -59,7 +59,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbReference = database.getReference();
 
-        //Add answer button
+        //when Add answer button is clicked
         addAnswerButton = (Button) findViewById(R.id.add_answer_button);
         addAnswerButton.setOnClickListener(new View.OnClickListener()
         {
@@ -67,13 +67,13 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-                //get answer typed into editText
+                //get answer typed into answer editText view
                 typedAnswerToQuestion = answerEditTextView.getText().toString();
                 //method to save answer to firebase attached to its question
                 saveAnswers();
 
 
-                //pass answer data to the View question activity and launch it
+                //pass answer data to the ViewQuestionActivity and launch it
                 Intent view_question_intent = new Intent(getApplicationContext(),
                         ViewQuestionActivity.class)
                         .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
@@ -101,7 +101,7 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         }
         else
         {
-            //getting the answer typed in the editTextview and setting it to variable
+            //getting the answer typed in the answer editTextview and setting it to variable
             typedAnswerToQuestion = answerEditTextView.getText().toString();
             Log.d(TAG, "TYPED ANSWER ABOVE 2: " + typedAnswerToQuestion);
 

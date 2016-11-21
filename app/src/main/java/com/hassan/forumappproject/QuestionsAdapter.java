@@ -8,7 +8,6 @@ import android.widget.ArrayAdapter;
 import android.widget.TextView;
 
 import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Created by hmumin on 11/11/16.
@@ -16,7 +15,6 @@ import java.util.List;
 
 public class QuestionsAdapter extends ArrayAdapter<Question> {
 
-    //TODO, maybe make ArrayList<ArrayList<Questions>>  \/   because I believe this allows us to do lists within lists.
     public QuestionsAdapter(Context context, ArrayList<Question> questions)
     {
         super(context, 0 , questions);
@@ -38,8 +36,6 @@ public class QuestionsAdapter extends ArrayAdapter<Question> {
         TextView dateTv = (TextView) convertView.findViewById(R.id.dateTV);
         TextView upVoteTv = (TextView) convertView.findViewById(R.id.upvote_downvoteTV);
         TextView questionTv = (TextView) convertView.findViewById(R.id.questionTV);
-        //TODO add a listview for answers??? if not delete this TODO
-        //ArrayList<String> answersHide = (ArrayList<String>) ??? ;
 
         //populate data into template view using data object
         dateTv.setText(question.getDate());
