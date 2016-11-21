@@ -1,5 +1,6 @@
 package com.hassan.forumappproject;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class MainActivity extends AppCompatActivity {
     public ListView questionsListView;
     public EditText questionEditText;
     public String questionAsked;
+
 
     //Store questions
     ArrayList<Question> questionItems = new ArrayList<Question>();
@@ -87,8 +89,28 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbReference = database.getReference();
 
-        //method fetching questions from Firebase so listview can be populated with questions
-        fetchQuestion();
+
+        //this is a progress bar/spinning wheel delay dialog box.
+        //when user types an answer and then clicks add answer we need to delay
+        //the listview for a bit so the answer can be saved into firebase before we fetch it
+        //otherwise we only fetch previous answers and not the new one that was just added
+        final ProgressDialog progDailog = ProgressDialog.show(this, "Getting all questions",
+                "please wait...", true);
+        new Thread() {
+            public void run() {
+                try {
+                    // sleep/delay for 4 seconds.
+                    sleep(2000);
+                } catch (Exception e) {
+                }
+                progDailog.dismiss();
+                //method fetching questions from Firebase so listview can be populated with questions
+                fetchQuestion();
+            }
+
+        }.start();
+
+
 
         //when listView clicked
         questionsListView.setOnItemClickListener(new AdapterView.OnItemClickListener()
@@ -137,7 +159,7 @@ public class MainActivity extends AppCompatActivity {
             String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
 
             //question object to pass to firebase
-            Question quesionObj = new Question(questionAsked,date);
+            Question quesionObj = new Question(questionAsked, date);
 
             DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push();
             //pass question object to firebase
@@ -165,6 +187,8 @@ public class MainActivity extends AppCompatActivity {
                 {
                     Log.d(TAG, "ds: " + ds);
                     Question question = ds.getValue(Question.class);
+                    question.setKey(ds.getKey());
+                    Log.d(TAG, "question and key: " + question.getQuestion() + " " + question.getKey());
                     questions.add(question);
                 }
                 //iterate over questions objects in firebase and add them to listview

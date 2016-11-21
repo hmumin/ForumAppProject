@@ -11,8 +11,8 @@ public class Question {
     public String question;
     public String date;
     public int upvote;
-    public String answer;
-    public ArrayList<String> answerList = new ArrayList<>();
+    public final ArrayList<String> answerList = new ArrayList<>();
+    public String key;
 
     //empty constructor
     public Question(){}
@@ -50,20 +50,23 @@ public class Question {
         this.upvote = upvote;
     }
 
-
-
-    public ArrayList getAnswerList()
-    {
-        return this.answerList;
+    public ArrayList<String> getAnswerList() {
+        return answerList;
     }
 
-
-    public void setAnswerList(ArrayList<String> answerList) {
-        this.answerList = answerList;
-    }
 
     public void addAnswerTolist(String answer)
     {
-        answerList.add(answer);
+       getAnswerList().add(answer);
+    }
+
+
+    //to get each questions key from firebase
+    public String getKey() {
+        return key;
+    }
+
+    public void setKey(String key) {
+        this.key = key;
     }
 }

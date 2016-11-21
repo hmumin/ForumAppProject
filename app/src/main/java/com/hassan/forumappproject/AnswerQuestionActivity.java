@@ -3,6 +3,7 @@ package com.hassan.forumappproject;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -34,6 +35,8 @@ public class AnswerQuestionActivity extends AppCompatActivity {
     private static final String ALL_QUESTIONS_KEY = "All_questions";
     public DatabaseReference dbReference;
 
+    public final String  TAG = "AnswerDebug";
+
 
 
     @Override
@@ -64,16 +67,18 @@ public class AnswerQuestionActivity extends AppCompatActivity {
             public void onClick(View v)
             {
 
-
+                //get answer typed into editText
+                typedAnswerToQuestion = answerEditTextView.getText().toString();
                 //method to save answer to firebase attached to its question
                 saveAnswers();
 
 
-                typedAnswerToQuestion = answerEditTextView.getText().toString();
                 //pass answer data to the View question activity and launch it
                 Intent view_question_intent = new Intent(getApplicationContext(),
-                        ViewQuestionActivity.class);
+                        ViewQuestionActivity.class)
+                        .setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                 view_question_intent.putExtra("Answer", typedAnswerToQuestion);
+                view_question_intent.putExtra("Question", questionAsked);
                 //launch view question activity
                 startActivity(view_question_intent);
 
@@ -98,13 +103,54 @@ public class AnswerQuestionActivity extends AppCompatActivity {
         {
             //getting the answer typed in the editTextview and setting it to variable
             typedAnswerToQuestion = answerEditTextView.getText().toString();
+            Log.d(TAG, "TYPED ANSWER ABOVE 2: " + typedAnswerToQuestion);
 
 
-            //need to get the question and attach the answer to it
-            //then save it to firebase
 
+            //Fetch questions objects from FireBase
+            final Query getAllQuestions = dbReference.child(ALL_QUESTIONS_KEY);
+            //used to fetch question answer array
+            final DatabaseReference mQuestionRef = FirebaseDatabase.getInstance().getReference().child("All_questions");
+            getAllQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+                    //arrayList of all questions
+                    ArrayList<Question> questions = new ArrayList<>();
+                    for(DataSnapshot ds : dataSnapshot.getChildren())
+                    {
+                       // Log.d(TAG, "ds: " + ds);
+                        Question question = ds.getValue(Question.class);
+                        question.setKey(ds.getKey());
+                        Log.d(TAG, "Question and KEY: " + question.getQuestion() + " " + question.getKey());
+                        questions.add(question);
+                    }
+
+                    //iterate over questions objects in arraylist that i got from firebase
+                    for(int i = 0; i < questions.size(); i++)
+                    {
+                        //if the firebase question is the question on this view we can add answers to it
+                        if(questions.get(i).getQuestion().equalsIgnoreCase(questionAsked))
+                        {
+                            //add answer to the questions answer list
+                            questions.get(i).addAnswerTolist(typedAnswerToQuestion);
+
+                            //updating questions answer array to add the answer into it
+                            mQuestionRef.child(questions.get(i).getKey()).setValue(questions.get(i));
+
+                        }
+
+                    }
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
 
             answerEditTextView.getText().clear();
+
         }
 
 
