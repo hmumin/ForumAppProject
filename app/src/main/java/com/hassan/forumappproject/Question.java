@@ -1,6 +1,7 @@
 package com.hassan.forumappproject;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by hmumin on 11/8/16.
@@ -17,10 +18,16 @@ public class Question {
     //empty constructor
     public Question(){}
 
-    public Question(String question, String date)
+    //TODO, add listview for Answers?, and int for upvote
+    public Question(String question, String date, ArrayList<String> answerList) // int upvote)
     {
         this.question = question;
         this.date  = date;
+        this.answerList = answerList;
+
+        //TODO add in which way?
+        //this.upvote = upvote;
+        //this.answerList = answerList;
     }
 
 
