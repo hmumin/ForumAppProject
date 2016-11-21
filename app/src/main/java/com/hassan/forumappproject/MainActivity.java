@@ -89,26 +89,33 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbReference = database.getReference();
 
+        fetchQuestion();
 
         //this is a progress bar/spinning wheel delay dialog box.
         //when user types an answer and then clicks add answer we need to delay
         //the listview for a bit so the answer can be saved into firebase before we fetch it
         //otherwise we only fetch previous answers and not the new one that was just added
-        final ProgressDialog progDailog = ProgressDialog.show(this, "Getting all questions",
-                "please wait...", true);
-        new Thread() {
-            public void run() {
-                try {
-                    // sleep/delay for 4 seconds.
-                    sleep(2000);
-                } catch (Exception e) {
-                }
-                progDailog.dismiss();
-                //method fetching questions from Firebase so listview can be populated with questions
-                fetchQuestion();
-            }
 
-        }.start();
+        //A better solution is to use the Firebase callbacks. Instead of a single value event listener,
+        //user a ValueEventListener, where the callback is called every time the data changes, and
+        //then the list can be updated as the data changes.
+        //Think multiple users - as other users add questions, or upvote them, your list should update
+
+//        final ProgressDialog progDailog = ProgressDialog.show(this, "Getting all questions",
+//                "please wait...", true);
+//        new Thread() {
+//            public void run() {
+//                try {
+//                    // sleep/delay for 4 seconds.
+//                    sleep(2000);
+//                } catch (Exception e) {
+//                }
+//                progDailog.dismiss();
+//                //method fetching questions from Firebase so listview can be populated with questions
+//                fetchQuestion();
+//            }
+//
+//        }.start();
 
 
 
@@ -178,7 +185,7 @@ public class MainActivity extends AppCompatActivity {
     {
         //Fetch data from FireBase to add to listView
         Query getAllQuestions = dbReference.child(ALL_QUESTIONS_KEY);
-        getAllQuestions.addListenerForSingleValueEvent(new ValueEventListener() {
+        getAllQuestions.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //arrayList of all questions
@@ -192,14 +199,16 @@ public class MainActivity extends AppCompatActivity {
                     Log.d(TAG, "question and key: " + question.getQuestion() + " " + question.getKey());
                     questions.add(question);
                 }
+
+                adapter.clear();   //clear previous answers
                 //iterate over questions objects in our arraylist that we received from firebase
                 // and add them to listview
                 for(int i = 0; i < questions.size(); i++)
                 {
                     adapter.add(questions.get(i));
-                    adapter.notifyDataSetChanged();
 
                 }
+                adapter.notifyDataSetChanged();
 
 
 

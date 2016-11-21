@@ -88,27 +88,33 @@ public class ViewQuestionActivity extends AppCompatActivity {
         answerToQuestion = answerIntent.getStringExtra("Answer");
 
 
+        fetchQuestionAnswers();
 
-        //this is a progress bar/spinning wheel delay dialog box.
-        //when user types an answer and then clicks add answer we need to delay
-        //the listview for a bit so the answer can be saved into firebase before we fetch it
-        //otherwise we only fetch previous answers and not the new one that was just added
-        final ProgressDialog progDailog = ProgressDialog.show(this, "Getting all answers",
-                "please wait...", true);
-        new Thread() {
-            public void run() {
-                try {
-                    // sleep/delay/buffer for 4 seconds.
-                    sleep(4000);
-                } catch (Exception e) {
-                }
-                progDailog.dismiss();
-                //method for fetching answer for the question from Firebase
-                //so listview can be populated with answers
-                fetchQuestionAnswers();
-            }
+        //you don't need this either - the answers are being added and saved in another Activity
+        //when you get back to this Activity, onCreate runs again and calls fetchQuestionAnswers()
+        //to get the latest.
+        //Firebase also maintains a local cache of your data so updates appear to happen very quickly.
 
-        }.start();
+//        //this is a progress bar/spinning wheel delay dialog box.
+//        //when user types an answer and then clicks add answer we need to delay
+//        //the listview for a bit so the answer can be saved into firebase before we fetch it
+//        //otherwise we only fetch previous answers and not the new one that was just added
+//        final ProgressDialog progDailog = ProgressDialog.show(this, "Getting all answers",
+//                "please wait...", true);
+//        new Thread() {
+//            public void run() {
+//                try {
+//                    // sleep/delay/buffer for 4 seconds.
+//                    sleep(4000);
+//                } catch (Exception e) {
+//                }
+//                progDailog.dismiss();
+//                //method for fetching answer for the question from Firebase
+//                //so listview can be populated with answers
+//                fetchQuestionAnswers();
+//            }
+//
+//        }.start();
 
 
         //button to press when you want to answer the question
