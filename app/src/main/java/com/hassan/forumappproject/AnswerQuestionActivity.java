@@ -21,9 +21,10 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
+//This is the class for when people wish to answer the question. Worrk with activity_answer_question.xml
 public class AnswerQuestionActivity extends AppCompatActivity {
 
-
+    //Declaring ui components
     public TextView questionTextView;
     public EditText answerEditTextView;
     public Button addAnswerButton;
@@ -142,13 +143,13 @@ public class AnswerQuestionActivity extends AppCompatActivity {
                     }
 
                 }
-
+                //Database loading problem protection
                 @Override
                 public void onCancelled(DatabaseError databaseError) {
 
                 }
             });
-
+            //Cleared out, ready for next imput
             answerEditTextView.getText().clear();
 
         }

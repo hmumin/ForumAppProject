@@ -37,8 +37,9 @@ public class MainActivity extends AppCompatActivity {
     public EditText questionEditText;
     public String questionAsked;
 
+    public Button signInButton;
 
-    //Store questions
+    //Store questions to work with the database
     ArrayList<Question> questionItems = new ArrayList<Question>();
     //adapter for listView
     QuestionsAdapter adapter;
@@ -50,6 +51,7 @@ public class MainActivity extends AppCompatActivity {
 
     //Debug log tag
     public static final String TAG = "DEBUG";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +91,15 @@ public class MainActivity extends AppCompatActivity {
         FirebaseDatabase database = FirebaseDatabase.getInstance();
         dbReference = database.getReference();
 
+//        signInButton = (Button) findViewById(R.id.sign_in_user_Button);
+//        signInButton.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                Intent login_intent =
+//                        new Intent(getApplicationContext(), login.class);
+//                startActivity(login_intent);
+//            }
+//        });
 
         //this is a progress bar/spinning wheel delay dialog box.
         //when user types an answer and then clicks add answer we need to delay
@@ -118,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long viewId)
             {
-                //
+                //defining and finding textview
                 TextView dateTextView = (TextView) view.findViewById(R.id.dateTV);
                 TextView questionTextView = (TextView) view.findViewById(R.id.questionTV);
                 TextView upvoteTextView = (TextView) view.findViewById(R.id.upvote_downvoteTV);
@@ -149,27 +160,26 @@ public class MainActivity extends AppCompatActivity {
     {
 
         //get question typed into editText and get date if only user types something otherwise
-        if(questionEditText.getText().toString().isEmpty())
+        if(questionEditText.getText().toString().isEmpty()) //To check if andthing is there
         {
-            Toast.makeText(this,"Type a question", Toast.LENGTH_LONG).show();
+            Toast.makeText(this,"Type a question", Toast.LENGTH_LONG).show(); //Inform use to type in a question.
         }
         else
         {
-            questionAsked = questionEditText.getText().toString();
-            String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date());
+            questionAsked = questionEditText.getText().toString(); //getting text typed in, put into variable
+            String date = new SimpleDateFormat("MM/dd/yyyy").format(new Date()); //Getting date and putting in month, day, year format
 
             //question object to pass to firebase
             Question quesionObj = new Question(questionAsked, date);
 
-            DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push();
+            DatabaseReference newQuestion = dbReference.child(ALL_QUESTIONS_KEY).push(); //adding question to the database
             //pass question object to firebase
             newQuestion.setValue(quesionObj);
-            adapter.clear();
-            fetchQuestion();
+            adapter.clear(); //Clearing out adapter to be ready for next question
+            fetchQuestion(); //Showing new list of questions, with the new one added.
 
-            questionEditText.getText().clear();
+            questionEditText.getText().clear(); //Clearing questionEditText for next question to be written in
         }
-
 
     }
 
@@ -204,7 +214,7 @@ public class MainActivity extends AppCompatActivity {
 
 
             }
-
+            //Error protection, hopefully to prevent from crashing
             @Override
             public void onCancelled(DatabaseError databaseError) {
 
