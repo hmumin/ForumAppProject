@@ -13,11 +13,12 @@ import java.util.ArrayList;
  * Created by hmumin on 11/11/16.
  */
 
+//To make sure each new question gets a slot below the last one
 public class QuestionsAdapter extends ArrayAdapter<Question> {
 
     public QuestionsAdapter(Context context, ArrayList<Question> questions)
     {
-        super(context, 0 , questions);
+        super(context, 0 , questions); //Llst starting at Zero or the first one
     }
 
     @Override
